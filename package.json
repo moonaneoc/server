@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "description": "A server framework based on koa.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "./node_modules/nodemon/bin/nodemon.js ./.app/bin/run.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonaneoc/server.git"
+  },
+  "author": "echo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/moonaneoc/server/issues"
+  },
+  "homepage": "https://gitlab.com/moonaneoc/server#README",
+  "dependencies": {
+    "koa": "^2.5.2",
+    "koa-body": "^4.0.4",
+    "koa-compress": "^3.0.0",
+    "koa-cors": "0.0.16",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "mongodb": "^3.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
