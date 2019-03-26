@@ -4,7 +4,7 @@ const koaBody = require('koa-body');
 const path = require("path");
 const compress = require('koa-compress');
 const logger = require('koa-logger')
-const cors = require('koa-cors');
+const cors = require('koa2-cors');
 
 const router = require("./core/router");
 const database = require("./core/database");
