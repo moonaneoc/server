@@ -1,3 +1,3 @@
-module.exports = async function (ctx) {
+module.exports = async function (db) {
     // 启动时加载
 }

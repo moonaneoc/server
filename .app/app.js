@@ -50,8 +50,8 @@ for (let middleware of middlewares) {
     app.use(middleware);
 }
 
-// 自动匹配路由
-app.use(router.routes());
+// 匹配路由
+app.use(router);
 
 // 压缩
 app.use(compress({
