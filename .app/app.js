@@ -7,6 +7,7 @@ const logger = require('koa-logger')
 const cors = require('koa2-cors');
 
 const router = require("./core/router");
+const model = require("./core/model");
 const database = require("./core/database");
 const startup = require("./core/startup");
 const middlewares = require("./core/middleware");
@@ -24,9 +25,10 @@ let db;
     startup(db);
 })()
 
-// 数据库
+// 引用
 app.use(async function (ctx, next) {
     Object.assign(ctx, db);
+    ctx.model = model;
     await next();
 })
 
