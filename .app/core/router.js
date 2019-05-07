@@ -1,29 +1,35 @@
 const path = require("path");
-const { isStr, isFunc, isObj } = require("varis");
+const { isFunc, isObj } = require("varis");
 
 let config = {};
 try {
   config = require(path.resolve("src/router"));
-} catch (e) {console.log(e)}
-if(!isObj(config)) throw new Error("Router must be an Object.");
+} catch (e) { }
+if (!isObj(config)) throw new Error("Router must be an Object.");
 
 module.exports = async function (ctx, next) {
-  let route = config[ctx.request.path];
-  if (!route || !isStr(route)) {
-    ctx.status = 404;
-    ctx.body = `${ctx.request.path} Not Found!`;
-    return;
-  }
-
-  let splitRes = route.split(".");
-  let filepath = splitRes.shift();
-  let handler = splitRes.join(".");
-
-  try {
-    let ctrl = require(path.resolve("src/controller/" + filepath));
-    handler = handler ? ctrl[handler] : ctrl;
-    if (!isFunc(handler)) throw "404 Not Found";
-  } catch (e) {
+  let handler = null;
+  
+  ctx.request.path = ctx.request.path.replace(/\/$/, "");
+  let reg = new RegExp(`^/api(/[^/]+){2,}/?$`);
+  if (reg.test(ctx.request.path)) {
+    let routeItems = ctx.request.path.replace(/(^\/)/, "").split("/");
+    routeItems.shift(); // 去掉前缀/api
+    handlerName = routeItems.pop();
+    let filepath = path.resolve("src/controller/" + routeItems.join("/") + ".js");
+    try {
+      controller = require(filepath);
+      handler = controller[handlerName];
+      if (!isFunc(handler)) throw "404 Not Found!";
+    } catch (e) {
+      ctx.status = 404;
+      ctx.body = `${ctx.request.path} Not Found!`;
+      return;
+    }
+  } else if (isFunc(config[ctx.request.path])) {
+    handler = config[ctx.request.path];
+  } else {
+    // 404
     ctx.status = 404;
     ctx.body = `${ctx.request.path} Not Found!`;
     return;
@@ -34,8 +40,7 @@ module.exports = async function (ctx, next) {
     await handler(params, ctx);
     await next();
   } catch (e) {
-    console.log("================================= 调用出错 =================================");
-    console.log(e);
+    console.error(e);
     ctx.status = 500;
   }
 }

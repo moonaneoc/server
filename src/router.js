@@ -1,3 +1,3 @@
 module.exports = {
-    "/foo": "foo.bar"
-}
+    "/da": (p, ctx) => { ctx.body = p }
+};

@@ -5,9 +5,8 @@ const path = require("path");
 const compress = require('koa-compress');
 const logger = require('koa-logger')
 const cors = require('koa2-cors');
-
 const router = require("./core/router");
-const model = require("./core/model");
+const modelLoader = require("./core/model");
 const database = require("./core/database");
 const startup = require("./core/startup");
 const middlewares = require("./core/middleware");
@@ -18,10 +17,11 @@ try {
     USER_CONFIG = require(path.resolve("app.json"));
 } catch (e) { }
 
-let db;
+let db, model;
 // 初始化函数
 (async function () {
     db = await database(); // 连接数据库
+    model = modelLoader(db); // 加载model
     startup(db);
 })()
 

@@ -22,7 +22,7 @@ let mongo = async function () {
             let MongoClient = require('mongodb').MongoClient;
             MongoClient.connect(mongoUrl, { useNewUrlParser: true }, async function (err, client) {
                 if (err) throw err;
-                console.log(">>mongo: " + mongoUrl);
+                console.log(">> mongo: " + mongoUrl);
                 resolve(client.db(options.db));
             });
         } else {
