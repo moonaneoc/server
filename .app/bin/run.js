@@ -1,5 +1,5 @@
 const app = require("../app.js");
-const { PORT } = require("../core/config.js").system;
+const { port } = require("../core/config.js").system;
 
-app.listen(PORT);
-console.log(">> Listen port " + PORT);
+app.listen(port);
+console.log(">> Listen port " + port);
