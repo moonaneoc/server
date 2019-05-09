@@ -1,5 +1,6 @@
 const path = require("path");
 const { isFunc, isObj } = require("varis");
+const logger = require("../lib/logger.js");
 
 let config = {};
 try {
@@ -40,7 +41,7 @@ module.exports = async function (ctx, next) {
     await handler(params, ctx);
     await next();
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     ctx.status = 500;
   }
 }

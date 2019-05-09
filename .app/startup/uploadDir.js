@@ -2,7 +2,7 @@
 const fs = require("fs");
 const { uploadDir } = require("../core/config.js").system;
 
-module.exports = async function () {
+module.exports = async function (ctx) {
     let pathArr = uploadDir.split("/");
     let path = "";
     try {

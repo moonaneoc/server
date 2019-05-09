@@ -22,5 +22,6 @@ config.system.uploadDir = config.system.uploadDir || DEFAULT_UPLOAD_DIR;
 config.system.maxFileSize = config.system.maxFileSize || DEFAULT_MAX_FILE_SIZE;
 config.system.mongoUri = config.system.mongoUri || null;
 config.system.redisUri = config.system.redisUri || null;
+config.system.logLevel = config.system.logLevel || "info";
 
 module.exports = config;

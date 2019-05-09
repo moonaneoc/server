@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { isFunc } = require("varis");
+const logger = require("../lib/logger.js");
 
 module.exports = function (db){
     let model = {};
@@ -12,7 +13,7 @@ module.exports = function (db){
     } catch (e) { }
     
     if (!fileList.length) {
-        console.log(">> No models were found.");
+        logger.info("No models were found.");
         return model;
     }
     
@@ -23,7 +24,7 @@ module.exports = function (db){
         if (!isFunc(_Model)) throw new Error(`Invalid Model "${modelName}".`);
         model[modelName] = new _Model(db);
     }
-    console.log(`>> Load models: ${Object.keys(model)}`);
+    logger.info(`Load models: ${Object.keys(model)}`);
 
     return model;
 }

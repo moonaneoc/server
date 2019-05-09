@@ -1,7 +1,7 @@
 let route = {};
 
 route["bar"] = async function (params, ctx) {
-    ctx.body = "ok"
+    ctx.body = "ok";
 }
 
 module.exports = route;

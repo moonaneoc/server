@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "./node_modules/nodemon/bin/nodemon.js ./.app/bin/run.js --watch . --watch .app"
+    "dev": "./node_modules/nodemon/bin/nodemon.js ./.app/app.js --watch . --watch .app"
   },
   "repository": {
     "type": "git",
@@ -21,8 +21,8 @@
     "koa": "^2.5.2",
     "koa-body": "^4.0.4",
     "koa-compress": "^3.0.0",
-    "koa-logger": "^3.2.0",
     "koa2-cors": "^2.0.6",
+    "log4js": "^4.1.1",
     "mongodb": "^3.1.6",
     "varis": "0.0.2"
   },

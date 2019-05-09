@@ -1,6 +1,6 @@
 class Foo {
-    constructor(db) {
-        this._coll = db.mongo.collection("foo");
+    constructor(ctx) {
+        this._coll = ctx.mongo.collection("foo");
     }
 }
 module.exports = Foo;

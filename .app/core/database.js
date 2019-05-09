@@ -1,3 +1,4 @@
+const logger = require("../lib/logger.js");
 const { mongoUri, redisUri } = require("./config.js").system;
 
 let mongo = async function () {
@@ -7,7 +8,7 @@ let mongo = async function () {
         let MongoClient = require('mongodb').MongoClient;
         MongoClient.connect(mongoUri, { useNewUrlParser: true }, async function (err, client) {
             if (err) throw err;
-            console.log(">> Mongo connected " + mongoUri);
+            logger.info("Mongo connected " + mongoUri);
             resolve(client.db());
         });
     })
@@ -21,7 +22,7 @@ let redis = async function () {
     if (!redisUri) return null;
 
     let Redis = require('ioredis');
-    console.log(">> Redis connected" + redisUri);
+    logger.info("Redis connected" + redisUri);
     return new Redis(redisUri);
 }
 
