@@ -1,4 +1,5 @@
-var app = require("../app.js");
+const app = require("../app.js");
+const { PORT } = require("../core/config.js").system;
 
-app.listen(process.env.PORT || 3000);
-console.log(">> Server start on port " + (process.env.PORT || 3000));
+app.listen(PORT);
+console.log(">> Listen port " + PORT);

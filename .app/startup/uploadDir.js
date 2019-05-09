@@ -1,10 +1,9 @@
 // 创建文件上传临时目录
 const fs = require("fs");
-const path = require("path");
-const SYS_CONFIG = require(path.resolve(".app", "config.json"));
+const { UPLOAD_DIR } = require("../core/config.js").system;
 
-module.exports = async function (ctx) {
-    let pathArr = SYS_CONFIG.UPLOAD_DIR_PATH.split("/");
+module.exports = async function () {
+    let pathArr = UPLOAD_DIR.split("/");
     let path = "";
     try {
         if (pathArr[0] == "") {

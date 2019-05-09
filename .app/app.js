@@ -1,7 +1,6 @@
 const Koa = require("koa");
 const app = new Koa();
 const koaBody = require('koa-body');
-const path = require("path");
 const compress = require('koa-compress');
 const logger = require('koa-logger')
 const cors = require('koa2-cors');
@@ -10,12 +9,7 @@ const modelLoader = require("./core/model");
 const database = require("./core/database");
 const startup = require("./core/startup");
 const middlewares = require("./core/middleware");
-
-let SYS_CONFIG = require(path.resolve(".app/config.json"));
-let USER_CONFIG = {};
-try {
-    USER_CONFIG = require(path.resolve("app.json"));
-} catch (e) { }
+const config = require("./core/config.js");
 
 let db, model;
 // 初始化函数
@@ -29,6 +23,7 @@ let db, model;
 app.use(async function (ctx, next) {
     Object.assign(ctx, db);
     ctx.model = model;
+    ctx.config = config;
     await next();
 })
 
@@ -42,8 +37,8 @@ app.use(logger());
 app.use(koaBody({
     multipart: true,
     formidable: {
-        maxFileSize: USER_CONFIG.MAX_FILE_SIZE || SYS_CONFIG.MAX_FILE_SIZE,    // 设置上传文件大小最大限制，默认2M
-        uploadDir: USER_CONFIG.UPLOAD_DIR_PATH || SYS_CONFIG.UPLOAD_DIR_PATH
+        maxFileSize: config.MAX_FILE_SIZE,
+        uploadDir: config.UPLOAD_DIR
     }
 }));
 

@@ -1,29 +1,30 @@
+const { mongoUri, redisUri } = require("./config.js").system;
+
 let mongo = async function () {
     return new Promise(function (resolve, reject) {
         let options = {
-            uri: process.env.mongo_uri || null,
-            host: process.env.mongo_host || null,
-            port: process.env.mongo_port || null,
-            db: process.env.mongo_db || null,
-            user: process.env.mongo_user || null,
-            pwd: process.env.mongo_pwd || null,
+            uri: mongoUri || null,
+            host: process.env.mongoHost || null,
+            port: process.env.mongoPort || null,
+            db: process.env.mongoDb || null,
+            user: process.env.mongoUser || null,
+            pwd: process.env.mongoPwd || null,
         }
-        let mongoUrl = options.uri || "";
-        if (!mongoUrl) {
+        if (!options.uri) {
             if (options.host && options.port && options.db) {
-                mongoUrl = `mongodb://${options.host}:${options.port}/${options.db}`;
+                options.uri = `mongodb://${options.host}:${options.port}/${options.db}`;
                 if (options.user && options.pwd) {
-                    mongoUrl = `mongodb://${options.user}:${options.pwd}@${options.host}:${options.port}/${options.db}`;
+                    options.uri = `mongodb://${options.user}:${options.pwd}@${options.host}:${options.port}/${options.db}`;
                 }
             }
         }
 
-        if (mongoUrl) {
+        if (options.uri) {
             let MongoClient = require('mongodb').MongoClient;
-            MongoClient.connect(mongoUrl, { useNewUrlParser: true }, async function (err, client) {
+            MongoClient.connect(options.uri, { useNewUrlParser: true }, async function (err, client) {
                 if (err) throw err;
-                console.log(">> mongo: " + mongoUrl);
-                resolve(client.db(options.db));
+                console.log(">> Mongo connected " + options.uri);
+                resolve(client.db());
             });
         } else {
             resolve(null);
@@ -36,10 +37,10 @@ let mysql = async function () {
 }
 
 let redis = async function () {
-    if (process.env.redisUrl) {
+    if (redisUri) {
         let Redis = require('ioredis');
-        console.log(">>redis: " + process.env.redisUrl);
-        return new Redis(process.env.redisUrl);
+        console.log(">>redis: " + redisUri);
+        return new Redis(redisUri);
     }
     return null;
 }

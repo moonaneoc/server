@@ -1,3 +1,3 @@
 module.exports = {
-    "/da": (p, ctx) => { ctx.body = p }
-};
+    "/ping": (params, ctx) => { ctx.body = "ok" }
+}

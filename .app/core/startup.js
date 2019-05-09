@@ -2,17 +2,17 @@ const fs = require("fs");
 const path = require("path");
 
 module.exports = async function (ctx) {
-    let fileList;
+    let sysStartups = [], userStartups = [];
     let sysFolder = path.resolve(".app/startup");
     let userFolder = path.resolve("src/startup");
 
-    fileList = fs.readdirSync(sysFolder);
-    for (let file of fileList) {
+    sysStartups = fs.readdirSync(sysFolder);
+    for (let file of sysStartups) {
         await require(sysFolder + "/" + file)(ctx);
     }
 
-    fileList = fs.readdirSync(userFolder);
-    for (let file of fileList) {
+    try { userStartups = fs.readdirSync(userFolder); } catch (e) { };
+    for (let file of userStartups) {
         await require(userFolder + "/" + file)(ctx);
     }
 }
