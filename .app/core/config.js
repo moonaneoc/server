@@ -18,8 +18,8 @@ for (let file of fileList) {
 
 config.system = config.system || {};
 config.system.PORT = config.system.PORT || DEFAULT_PORT;
-config.system.UPLOAD_DIR = config.system.UPLOAD_DIR || DEFAULT_UPLOAD_DIR;
-config.system.MAX_FILE_SIZE = config.system.MAX_FILE_SIZE || DEFAULT_MAX_FILE_SIZE;
+config.system.uploadDir = config.system.uploadDir || DEFAULT_UPLOAD_DIR;
+config.system.maxFileSize = config.system.maxFileSize || DEFAULT_MAX_FILE_SIZE;
 config.system.mongoUri = config.system.mongoUri || null;
 config.system.redisUri = config.system.redisUri || null;
 

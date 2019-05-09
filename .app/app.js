@@ -37,8 +37,8 @@ app.use(logger());
 app.use(koaBody({
     multipart: true,
     formidable: {
-        maxFileSize: config.MAX_FILE_SIZE,
-        uploadDir: config.UPLOAD_DIR
+        maxFileSize: config.maxFileSize,
+        uploadDir: config.uploadDir
     }
 }));
 
