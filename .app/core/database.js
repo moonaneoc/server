@@ -2,33 +2,14 @@ const { mongoUri, redisUri } = require("./config.js").system;
 
 let mongo = async function () {
     return new Promise(function (resolve, reject) {
-        let options = {
-            uri: mongoUri || null,
-            host: process.env.mongoHost || null,
-            port: process.env.mongoPort || null,
-            db: process.env.mongoDb || null,
-            user: process.env.mongoUser || null,
-            pwd: process.env.mongoPwd || null,
-        }
-        if (!options.uri) {
-            if (options.host && options.port && options.db) {
-                options.uri = `mongodb://${options.host}:${options.port}/${options.db}`;
-                if (options.user && options.pwd) {
-                    options.uri = `mongodb://${options.user}:${options.pwd}@${options.host}:${options.port}/${options.db}`;
-                }
-            }
-        }
+        if (!mongoUri) resolve(null);
 
-        if (options.uri) {
-            let MongoClient = require('mongodb').MongoClient;
-            MongoClient.connect(options.uri, { useNewUrlParser: true }, async function (err, client) {
-                if (err) throw err;
-                console.log(">> Mongo connected " + options.uri);
-                resolve(client.db());
-            });
-        } else {
-            resolve(null);
-        }
+        let MongoClient = require('mongodb').MongoClient;
+        MongoClient.connect(mongoUri, { useNewUrlParser: true }, async function (err, client) {
+            if (err) throw err;
+            console.log(">> Mongo connected " + mongoUri);
+            resolve(client.db());
+        });
     })
 }
 
@@ -37,12 +18,11 @@ let mysql = async function () {
 }
 
 let redis = async function () {
-    if (redisUri) {
-        let Redis = require('ioredis');
-        console.log(">>redis: " + redisUri);
-        return new Redis(redisUri);
-    }
-    return null;
+    if (!redisUri) return null;
+
+    let Redis = require('ioredis');
+    console.log(">> Redis connected" + redisUri);
+    return new Redis(redisUri);
 }
 
 module.exports = async function () {
